@@ -7,6 +7,7 @@ import com.reis.usuario.model.User
 import com.reis.usuario.repository.StackRepository
 import com.reis.usuario.repository.UserRepository
 import org.springframework.stereotype.Service
+import java.math.BigInteger
 
 @Service
 class UserService (var userRepository: UserRepository, var stackRepository: StackRepository) {
@@ -15,6 +16,10 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
         val user = userRepository.save(toNewUserModel(userRequestDTO))
         val stacks = stackRepository.saveAll(userRequestDTO.stack.map { toNewStackModel(user, it)})
         return toDTO(user, stacks)
+    }
+
+    fun finUserById(id: BigInteger) : UserResponseDTO {
+        return toDTO(userRepository.findById(id).orElseThrow());
     }
 
     private fun toNewUserModel(userRequestDTO: UserRequestDTO) : User {
@@ -38,6 +43,16 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
             user.name,
             user.birthDate,
             stacks.map { it.name }
+        )
+    }
+
+    private fun toDTO(user: User ) : UserResponseDTO {
+        return UserResponseDTO(
+            user.id,
+            user.nick,
+            user.name,
+            user.birthDate,
+            user.stack?.map { it.name }
         )
     }
 

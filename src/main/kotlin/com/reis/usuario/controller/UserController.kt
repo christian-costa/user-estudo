@@ -35,7 +35,7 @@ class UserController(private val userService: UserService) {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     fun findUserId(@PathVariable id: BigInteger) : UserResponseDTO {
-        return UserResponseDTO(BigInteger.ONE, "fulano", "Fulano Da Silva", LocalDateTime.now(), listOf("Java", "Kotlin"))
+        return userService.finUserById(id)
     }
 
     @GetMapping
