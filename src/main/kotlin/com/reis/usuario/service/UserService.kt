@@ -22,6 +22,14 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
         return toDTO(userRepository.findById(id).orElseThrow());
     }
 
+    fun findAll() : List<UserResponseDTO> {
+        return  userRepository.findAll().stream().map { toDTO(it) }.toList()
+    }
+
+    fun delete(id: BigInteger) {
+        userRepository.deleteById(id)
+    }
+
     private fun toNewUserModel(userRequestDTO: UserRequestDTO) : User {
         return User(
             null,

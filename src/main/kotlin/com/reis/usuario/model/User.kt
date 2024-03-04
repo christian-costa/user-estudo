@@ -17,6 +17,6 @@ data class User (
     val name: String,
     @Column(name = "birthdate")
     val birthDate: LocalDateTime,
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY )
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY )
     val stack: List<Stack>?
 )

@@ -41,14 +41,13 @@ class UserController(private val userService: UserService) {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     fun findUsers() : List<UserResponseDTO> {
-        return listOf(UserResponseDTO(BigInteger.ONE, "fulano", "Fulano Da Silva", LocalDateTime.now(), listOf("Java", "Kotlin")))
+        return userService.findAll();
     }
-
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUserId(@PathVariable id: BigInteger) {
-
+        userService.delete(id)
     }
 
 }
