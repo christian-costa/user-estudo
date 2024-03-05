@@ -2,6 +2,7 @@ package com.reis.usuario.service
 
 import com.reis.usuario.dto.UserRequestDTO
 import com.reis.usuario.dto.UserResponseDTO
+import com.reis.usuario.dto.UserUpdateRequestDTO
 import com.reis.usuario.model.Stack
 import com.reis.usuario.model.User
 import com.reis.usuario.repository.StackRepository
@@ -16,6 +17,11 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
         val user = userRepository.save(toNewUserModel(userRequestDTO))
         val stacks = stackRepository.saveAll(userRequestDTO.stack.map { toNewStackModel(user, it)})
         return toDTO(user, stacks)
+    }
+
+    fun  updateUser(id: BigInteger, userDTO: UserUpdateRequestDTO) : UserResponseDTO {
+        val user = userRepository.findById(id).orElseThrow()
+        return toDTO(userRepository.save(toModel(id, userDTO, user.stack)))
     }
 
     fun finUserById(id: BigInteger) : UserResponseDTO {
@@ -40,17 +46,27 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
             )
     }
 
+    private fun toModel(id: BigInteger, userDTO : UserUpdateRequestDTO, stacks: List<Stack>? ) : User {
+        return User(
+            id,
+            userDTO.nick,
+            userDTO.name,
+            userDTO.birthDate,
+            stacks
+        )
+    }
+
     private fun toNewStackModel(user: User, nameStack: String) : Stack {
         return Stack(null, nameStack, user)
     }
 
-    private fun toDTO(user: User, stacks: List<Stack> ) : UserResponseDTO {
+    private fun toDTO(user: User, stacks: List<Stack>? ) : UserResponseDTO {
         return UserResponseDTO(
             user.id,
             user.nick,
             user.name,
             user.birthDate,
-            stacks.map { it.name }
+            stacks?.map { it.name }
         )
     }
 

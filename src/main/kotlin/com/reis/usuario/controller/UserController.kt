@@ -2,6 +2,7 @@ package com.reis.usuario.controller
 
 import com.reis.usuario.dto.UserRequestDTO
 import com.reis.usuario.dto.UserResponseDTO
+import com.reis.usuario.dto.UserUpdateRequestDTO
 import com.reis.usuario.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -28,8 +29,8 @@ class UserController(private val userService: UserService) {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun updateUser(@PathVariable id: BigInteger, @RequestBody userDTO: UserRequestDTO) : UserResponseDTO {
-        return UserResponseDTO(BigInteger.ONE, "fulano", "Fulano Da Silva", LocalDateTime.now(), listOf("Java", "Kotlin"))
+    fun updateUser(@PathVariable id: BigInteger, @RequestBody userDTO: UserUpdateRequestDTO) : UserResponseDTO {
+        return userService.updateUser(id, userDTO)
     }
 
     @GetMapping("/{id}")
