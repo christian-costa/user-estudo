@@ -1,5 +1,6 @@
 package com.reis.usuario.service
 
+import com.reis.usuario.dto.StackResponseDTO
 import com.reis.usuario.dto.UserRequestDTO
 import com.reis.usuario.dto.UserResponseDTO
 import com.reis.usuario.dto.UserUpdateRequestDTO
@@ -66,7 +67,7 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
             user.nick,
             user.name,
             user.birthDate,
-            stacks?.map { it.name }
+            stacks?.map { StackResponseDTO(it.id, it.name) }
         )
     }
 
@@ -76,7 +77,7 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
             user.nick,
             user.name,
             user.birthDate,
-            user.stack?.map { it.name }
+            user.stack?.map { StackResponseDTO(it.id, it.name) }
         )
     }
 

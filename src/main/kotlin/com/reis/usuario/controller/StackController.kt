@@ -22,10 +22,10 @@ class StackController(private val stackService: StackService) {
 
     }
 
-    @DeleteMapping("/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    fun deleteStack(@PathVariable userId: BigInteger, @RequestBody stackDTO: StackRequestDTO) {
-
+    @DeleteMapping("/{stackId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteStack(@PathVariable stackId: BigInteger) {
+        stackService.deleteStack(stackId);
     }
 
 }

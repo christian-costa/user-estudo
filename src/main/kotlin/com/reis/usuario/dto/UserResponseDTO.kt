@@ -10,5 +10,5 @@ data class UserResponseDTO(
     val name: String,
     @JsonProperty("birth_date")
     val birthDate: LocalDateTime,
-    val stack: List<String>?
+    val stack: List<StackResponseDTO>?
 )

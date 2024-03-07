@@ -21,6 +21,10 @@ class StackService (private val stackRepository: StackRepository, private val us
 
     }
 
+    fun deleteStack(stackId: BigInteger) {
+        stackRepository.deleteById(stackId)
+    }
+
     private fun toModel(user: User, stackDTO: StackRequestDTO) : Stack {
         return Stack(null, stackDTO.name, user)
     }
