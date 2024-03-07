@@ -16,10 +16,10 @@ class StackController(private val stackService: StackService) {
     fun addStack(@PathVariable userId: BigInteger, @RequestBody stackDTOS: List<StackRequestDTO>) : List<StackResponseDTO> {
         return stackService.addStack(userId, stackDTOS)
     }
-    @PutMapping("/{userId}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    fun updateStack(@PathVariable userId: BigInteger, @RequestBody stackDTO: StackRequestDTO) {
-
+    fun updateStack(@PathVariable id: BigInteger, @RequestBody stackDTO: StackRequestDTO) : StackResponseDTO {
+        return stackService.updateStack(id, stackDTO)
     }
 
     @DeleteMapping("/{stackId}")

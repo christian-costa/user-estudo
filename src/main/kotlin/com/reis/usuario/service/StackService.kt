@@ -17,8 +17,9 @@ class StackService (private val stackRepository: StackRepository, private val us
         return stackRepository.saveAll(stackDTOs.stream().map { toModel(user, it) }.toList()).map { toDTO(it) }
     }
 
-    fun updateStack() {
-
+    fun updateStack(id: BigInteger, stackRequestDTO: StackRequestDTO) :  StackResponseDTO {
+        val stack = stackRepository.findById(id).orElseThrow()
+        return toDTO(stackRepository.save(Stack(id, stackRequestDTO.name, stack.user)))
     }
 
     fun deleteStack(stackId: BigInteger) {
@@ -33,7 +34,4 @@ class StackService (private val stackRepository: StackRepository, private val us
     private fun toDTO(stack: Stack) : StackResponseDTO {
         return StackResponseDTO(stack.id, stack.name)
     }
-
-
-
 }
