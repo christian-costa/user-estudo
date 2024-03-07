@@ -14,7 +14,7 @@ data class User (
     @Column(name = "id")
     val id: BigInteger?,
     @Column(name = "nick", nullable = true, length = 32)
-    val nick: String,
+    val nick: String?,
     @NotBlank
     @Column(name = "name", length = 255)
     @NotBlank

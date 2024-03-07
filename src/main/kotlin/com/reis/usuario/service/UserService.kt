@@ -16,7 +16,12 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
 
     fun createNewUser(userRequestDTO: UserRequestDTO) : UserResponseDTO {
         val user = userRepository.save(toNewUserModel(userRequestDTO))
-        val stacks = stackRepository.saveAll(userRequestDTO.stack.map { toNewStackModel(user, it)})
+        var stacks : List<Stack> = listOf()
+
+        if(userRequestDTO.stack != null) {
+            stacks = stackRepository.saveAll(userRequestDTO.stack.map { toNewStackModel(user, it.name)})
+        }
+
         return toDTO(user, stacks)
     }
 

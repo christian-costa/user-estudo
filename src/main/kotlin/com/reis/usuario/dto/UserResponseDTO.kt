@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 data class UserResponseDTO(
     val id: BigInteger?,
-    val nick: String,
+    val nick: String?,
     val name: String,
     @JsonProperty("birth_date")
     val birthDate: LocalDateTime,
