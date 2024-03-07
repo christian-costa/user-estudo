@@ -1,0 +1,31 @@
+package com.reis.usuario.controller
+
+import com.reis.usuario.dto.StackRequestDTO
+import com.reis.usuario.dto.StackResponseDTO
+import com.reis.usuario.service.StackService
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
+import java.math.BigInteger
+
+@RestController
+@RequestMapping("stacks")
+class StackController(private val stackService: StackService) {
+
+    @PostMapping("/{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addStack(@PathVariable userId: BigInteger, @RequestBody stackDTOS: List<StackRequestDTO>) : List<StackResponseDTO> {
+        return stackService.addStack(userId, stackDTOS)
+    }
+    @PutMapping("/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun updateStack(@PathVariable userId: BigInteger, @RequestBody stackDTO: StackRequestDTO) {
+
+    }
+
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun deleteStack(@PathVariable userId: BigInteger, @RequestBody stackDTO: StackRequestDTO) {
+
+    }
+
+}
