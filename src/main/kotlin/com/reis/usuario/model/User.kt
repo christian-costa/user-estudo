@@ -1,6 +1,8 @@
 package com.reis.usuario.model
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
+import org.springframework.format.annotation.DateTimeFormat
 import java.math.BigInteger
 import java.time.LocalDateTime
 
@@ -11,11 +13,14 @@ data class User (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: BigInteger?,
-    @Column(name = "nick")
+    @Column(name = "nick", nullable = true, length = 32)
     val nick: String,
-    @Column(name = "name")
+    @NotBlank
+    @Column(name = "name", length = 255)
+    @NotBlank
     val name: String,
     @Column(name = "birthdate")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     val birthDate: LocalDateTime,
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "user", fetch = FetchType.LAZY )
     val stack: List<Stack>?

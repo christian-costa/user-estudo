@@ -10,7 +10,7 @@ data class Stack(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     val id: BigInteger?,
-    @Column(name = "name")
+    @Column(name = "name", length = 32)
     val name: String,
     @ManyToOne
     @JoinColumn(name = "id_user")
