@@ -3,7 +3,6 @@ package com.reis.usuario.service
 import com.reis.usuario.dto.StackResponseDTO
 import com.reis.usuario.dto.UserRequestDTO
 import com.reis.usuario.dto.UserResponseDTO
-import com.reis.usuario.dto.UserUpdateRequestDTO
 import com.reis.usuario.model.Stack
 import com.reis.usuario.model.User
 import com.reis.usuario.repository.StackRepository
@@ -25,7 +24,7 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
         return toDTO(user, stacks)
     }
 
-    fun  updateUser(id: BigInteger, userDTO: UserUpdateRequestDTO) : UserResponseDTO {
+    fun  updateUser(id: BigInteger, userDTO: UserRequestDTO) : UserResponseDTO {
         val user = userRepository.findById(id).orElseThrow()
         return toDTO(userRepository.save(toModel(id, userDTO, user.stack)))
     }
@@ -52,7 +51,7 @@ class UserService (var userRepository: UserRepository, var stackRepository: Stac
             )
     }
 
-    private fun toModel(id: BigInteger, userDTO : UserUpdateRequestDTO, stacks: List<Stack>? ) : User {
+    private fun toModel(id: BigInteger, userDTO : UserRequestDTO, stacks: List<Stack>? ) : User {
         return User(
             id,
             userDTO.nick,

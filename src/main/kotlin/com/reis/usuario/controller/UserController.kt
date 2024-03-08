@@ -29,7 +29,7 @@ class UserController(private val userService: UserService) {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun updateUser(@PathVariable id: BigInteger, @RequestBody userDTO: UserUpdateRequestDTO) : UserResponseDTO {
+    fun updateUser(@PathVariable id: BigInteger, @RequestBody userDTO: UserRequestDTO) : UserResponseDTO {
         return userService.updateUser(id, userDTO)
     }
 

@@ -18,6 +18,7 @@ import org.mockito.Mockito.*
 import org.mockito.kotlin.whenever
 
 import org.springframework.boot.test.context.SpringBootTest
+import java.util.*
 
 @SpringBootTest
 class UserServiceTest {
@@ -60,4 +61,60 @@ class UserServiceTest {
         verify(userRepository).save(any())
         verify(stackRepository, never()).saveAll(anyIterable())
     }
+
+    @Test
+    fun deveAtualizarUsuarioComSucesso() {
+        whenever(userRepository.findById(any())).thenReturn(Optional.of(UserBuilder.builder().build()))
+        whenever(userRepository.save(any())).thenReturn(UserBuilder.builder().build())
+
+        var result = userService.updateUser(USER_ID, UserRequestDTOBuilder.builder().build())
+
+        Assertions.assertEquals(USER_ID, result.id)
+        Assertions.assertEquals(USER_NICK, result.nick)
+        Assertions.assertEquals(USER_NAME, result.name)
+        Assertions.assertEquals(0, result.stack?.size)
+
+        verify(userRepository).findById(any())
+        verify(userRepository).save(any())
+    }
+
+    @Test
+    fun buscarUsuarioComSucesso() {
+        whenever(userRepository.findById(any())).thenReturn(Optional.of(UserBuilder.builder().build()))
+
+        var result = userService.finUserById(USER_ID)
+
+        Assertions.assertEquals(USER_ID, result.id)
+        Assertions.assertEquals(USER_NICK, result.nick)
+        Assertions.assertEquals(USER_NAME, result.name)
+        Assertions.assertEquals(0, result.stack?.size)
+
+        verify(userRepository).findById(any())
+    }
+
+    @Test
+    fun buscarUsuariosComSucesso() {
+        whenever(userRepository.findAll()).thenReturn(listOf(UserBuilder.builder().build()))
+
+        var results = userService.findAll()
+
+        Assertions.assertEquals(1, results.size)
+        Assertions.assertEquals(USER_ID, results.get(0).id)
+        Assertions.assertEquals(USER_NICK, results.get(0).nick)
+        Assertions.assertEquals(USER_NAME, results.get(0).name)
+        Assertions.assertEquals(0, results.get(0).stack?.size)
+
+        verify(userRepository).findAll()
+    }
+
+    @Test
+    fun deletarUsuario() {
+
+        doNothing().whenever(userRepository).deleteById(any())
+        userService.delete(USER_ID)
+        verify(userRepository).deleteById(any())
+
+    }
+
+
 }
