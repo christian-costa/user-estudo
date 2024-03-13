@@ -1,0 +1,13 @@
+CREATE TABLE tb_user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nick VARCHAR(32),
+    name VARCHAR(255) NOT NULL,
+    birthdate DATETIME NOT NULL
+);
+
+CREATE TABLE stack (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(32) NOT NULL,
+    id_user BIGINT,
+    FOREIGN KEY (id_user) REFERENCES tb_user(id)
+);
